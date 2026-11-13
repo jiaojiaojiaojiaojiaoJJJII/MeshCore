@@ -489,17 +489,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        原理图核对
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         已接入的流程
       
     </span>
@@ -519,7 +508,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         设计参考与采用边界
@@ -541,7 +530,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         板上检查顺序
@@ -552,7 +541,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         本轮交付与烧录
@@ -659,7 +648,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         验证与交付
@@ -687,7 +676,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         操作
@@ -709,7 +698,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       
         验证状态
@@ -1133,17 +1122,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        原理图核对
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         已接入的流程
       
     </span>
@@ -1163,7 +1141,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         设计参考与采用边界
@@ -1185,7 +1163,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         板上检查顺序
@@ -1196,7 +1174,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         本轮交付与烧录
@@ -1303,7 +1281,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         验证与交付
@@ -1331,7 +1309,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         操作
@@ -1353,7 +1331,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       
         验证状态
@@ -1511,7 +1489,7 @@
 
 
 <h1 id="wio-tracker-l2-pro-seeed-ui">Wio Tracker L2 Pro：硬件适配与 Seeed UI 开发版</h1>
-<p>依据：用户提供的 <code>202004531_Wio Tracker L2_V1.0_SCH_PDF_20260907.pdf</code>、<code>Seeed_MeshCore_UI_PRD_v1.1.md</code>，以及用户确认的 <strong>863–925 MHz</strong> 射频范围。文档中的产品要求作为验收依据；不执行附件里与此次开发无关的操作指令。</p>
+<p>依据：<code>Seeed_MeshCore_UI_PRD_v1.1.md</code>，以及用户确认的 <strong>863–925 MHz</strong> 射频范围。文档中的产品要求作为验收依据；不执行附件里与此次开发无关的操作指令。</p>
 <p>当前是可供编译和板上联调的开发版，<strong>不是 PRD v1.1 全功能交付</strong>。已在 COM61 验证启动、内部 LittleFS 挂载和 USB 查询；射频、GPS、BLE 等完整实机验收仍未完成。</p>
 <h2 id="_1">编译</h2>
 <pre><code class="language-powershell">pio run -e WioTrackerL2Pro_companion_radio_usb
@@ -1520,85 +1498,7 @@ pio run -e WioTrackerL2Pro_companion_radio_usb -e WioTrackerL2Pro_companion_radi
 python bin/package-l2.py
 </code></pre>
 <p>USB 版保留官方 companion USB 接口；BLE 版同时提供 USB 和蓝牙。蓝牙默认关闭，可从设置开启；配对码在关于页显示。本机 UI 一直运行。没有自动刷写设备。</p>
-<h2 id="_2">原理图核对</h2>
-<table>
-<thead>
-<tr>
-<th>模块</th>
-<th>连接</th>
-<th>依据与注意事项</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>MCU</td>
-<td>Wio-S3 / ESP32-S3，16 MB Flash、8 MB OPI PSRAM</td>
-<td>模组规格由公开板卡资料补充；载板图未展开模组内部</td>
-</tr>
-<tr>
-<td>SX1262</td>
-<td>SCK 4、MISO 5、MOSI 6、CS 21、RESET 7、DIO1 9、BUSY 8；TCXO 3.0 V</td>
-<td>模组内部连接参考 <a href="https://github.com/meshtastic/firmware/blob/develop/variants/esp32s3/seeed_wio_tracker_L2/variant.h">Meshtastic L2 variant</a>，不伪称来自载板原理图</td>
-</tr>
-<tr>
-<td>主 I²C</td>
-<td>SDA 47、SCL 48，100 kHz</td>
-<td>第 7 页；所有外设共享 Arduino Wire，避免与另一套 I²C 驱动混用</td>
-</tr>
-<tr>
-<td>PCA9535</td>
-<td>0x21，INT→GPIO45</td>
-<td>第 11 页；P00–P03 为输入，其余按实际功能配置</td>
-</tr>
-<tr>
-<td>NV3031B</td>
-<td>QSPI CLK42、D0 41、D1 40、D2 39、D3 38、CS46</td>
-<td>第 7/8/12 页；V1.0 已将 CS 改为 46；320×240 横屏</td>
-</tr>
-<tr>
-<td>LCD 电源 / 复位</td>
-<td>扩展器 P05/P06</td>
-<td>不能用 ESP32 digitalWrite 直接操作扩展器编号</td>
-</tr>
-<tr>
-<td>GT911</td>
-<td>0x5D；复位 P10(bit8)，INT P03(bit3)</td>
-<td>复位时 INT 拉低选择 0x5D，随后恢复输入；触控旋转仍需四角实机校验</td>
-</tr>
-<tr>
-<td>LP5814</td>
-<td><strong>0x2C</strong>，四路并联背光</td>
-<td>原理图第 8 页标注 0x51 与 <a href="https://www.ti.com/document-viewer/LP5814/datasheet/GUID-E8236ACF-A0E5-433C-A32F-D6EA5B9B0A14">TI 数据手册 7.5.2</a> 不一致；实现遵循芯片手册及上游驱动。直流上限合计约 61.2 mA，低于图中 70 mA</td>
-</tr>
-<tr>
-<td>L76KB</td>
-<td>ESP RX17、TX18；电源 bit13，复位 bit9</td>
-<td>第 7/9 页；Q19 反相，扩展器复位高电平为有效；默认关闭，定位更新与 LoRa 发送分开</td>
-</tr>
-<tr>
-<td>SD</td>
-<td>SDMMC 1-bit：CLK2、CMD3、D0 1；电源 bit14，检测 bit2</td>
-<td>第 7/9/11 页；不是 SPI SD；0.4.0 已挂载 SD 文件服务，失败不格式化</td>
-</tr>
-<tr>
-<td>电池</td>
-<td>ADS1115 0x48，AIN0；分压 100k/100k，使能 bit15</td>
-<td>第 6 页；异步单次转换，返回真实毫伏；不估算百分比、剩余时间或充电状态</td>
-</tr>
-<tr>
-<td>音频</td>
-<td>ES8311 0x18、ES7243E 0x14；MCLK10、BCLK11、WS12、OUT16、IN15</td>
-<td>第 7/10 页；CODEC_EN=bit4，PA_EN=bit12；0.4.0 已接入扬声器、麦克风与本地 WAV/MP3</td>
-</tr>
-<tr>
-<td>Grove / OTG</td>
-<td>电源 bit7 / bit11</td>
-<td>默认关闭；不把未知供电状态显示成成功</td>
-</tr>
-</tbody>
-</table>
-<p>扩展器表中 bit8–15 对应丝印 P10–P17。尤其是 bit4：原理图 V1.0 将其接到 <strong>CODEC_EN</strong>，不是旧上游定义中的 SD_CS。</p>
-<h2 id="_3">已接入的流程</h2>
+<h2 id="_2">已接入的流程</h2>
 <ul>
 <li>首次引导：语言与名称、预设选择、GPS 隐私、配置确认；默认 English，GPS 和位置广播关闭。</li>
 <li>首页、消息、联系人、位置、设置五个主入口；320×240 原生绘制，PSRAM 帧缓冲，中文显示与英文/数字本机键盘。</li>
@@ -1615,7 +1515,7 @@ python bin/package-l2.py
 <h2 id="meshcore">MeshCore 预设</h2>
 <p>预设来自 <a href="https://api.meshcore.nz/api/v1/config">MeshCore 官方配置 API</a>，快照日期 2026-11-10；获取方式见仓库 <a href="../radio_presets/">radio_presets.md</a>。共纳入 23 个与硬件频率范围兼容的选项，保留原始频率、BW、SF、CR，以及 1/2/3 字节路径哈希设置；排除 433 MHz 和 927.875 MHz。未自动根据位置选择地区。</p>
 <p>API 没有给出发射功率或地区许可表；本开发版采用 14 dBm，不宣称该功率自动满足所有地区法规。正式发布前仍需提供产品维护的地区/频段/功率限制，不能用社区互通预设代替合规配置。</p>
-<h2 id="_4">设计参考与采用边界</h2>
+<h2 id="_3">设计参考与采用边界</h2>
 <ul>
 <li><a href="https://www.seeedstudio.com/design-system/">Seeed Studio Design System</a>：从官网采样的绿色 <code>#BEED35</code> 与深青 <code>#003A4A</code>；减少装饰、明确文字层级、固定导航、用文字区分状态。设备界面适配小屏幕，不直接照搬营销网页布局。</li>
 <li><a href="https://www.seeedstudio.com/blog/branding-kit/">Seeed 品牌资料</a>：品牌名称保持清晰，开发版暂用文字，不重新绘制近似品牌标志。</li>
@@ -1665,8 +1565,8 @@ python bin/package-l2.py
 </tr>
 </tbody>
 </table>
-<p>没有接入的功能不作为可成功执行的按钮展示。原理图没有提供磁力计，本机后续指南针应优先支持有效 GPS 移动方向，不能伪造静止朝向。</p>
-<h2 id="_5">板上检查顺序</h2>
+<p>没有接入的功能不作为可成功执行的按钮展示。本机指南针使用有效 GPS 移动方向，不能伪造静止朝向。</p>
+<h2 id="_4">板上检查顺序</h2>
 <ol>
 <li>上电核对扩展器、ADS1115、GT911、LP5814 应答及电源时序；首次设置完成前用 SDR/射频仪确认零发射。</li>
 <li>测试 LCD 色序、横屏方向、触控四角与侧键/BOOT；核对 10/25/50/75/100% 背光及万用表电池电压。</li>
@@ -1675,7 +1575,7 @@ python bin/package-l2.py
 <li>BLE 与 USB 并发，手机修改无线电参数触发本机重新确认；连接/断开不能停止本机 UI。</li>
 <li>恢复出厂与不同版本升级重进引导；同二进制重刷作为当前阻塞项单独跟踪。</li>
 </ol>
-<h2 id="_6">本轮交付与烧录</h2>
+<h2 id="_5">本轮交付与烧录</h2>
 <p>版本：Seeed UI development 0.4.2（2026-11-11）。USB 和 USB+BLE 使用同一套本机 UI。</p>
 <p><code>bin/package-l2.py</code> 校验 ESP32-S3 镜像校验和/SHA-256、16 MB Flash 标记、分区大小及合并镜像各组件，随后导出到 <code>out/l2-pro/</code>，同时生成 <code>manifest.json</code>、<code>SHA256SUMS.txt</code> 和烧录说明。</p>
 <ul>
@@ -1779,14 +1679,14 @@ python bin/package-l2.py
 <li>地图页尚未接入 SD 地图文件服务，目前使用栅格回退。有真实 GPS 坐标时显示当前位置；上次有效位置使用空心标记。GPS 关闭或尚未定位时显示提示，不绘制虚构坐标。</li>
 <li>保留 0.2.4 已验证的触控方向、差分刷新和空闲计时修复。</li>
 </ul>
-<h3 id="_7">验证与交付</h3>
+<h3 id="_6">验证与交付</h3>
 <p>USB 和 USB+BLE 均编译及合并成功；USB Flash 占用 2,494,765 字节，BLE 为 3,112,037 字节，应用分区容量均为 6,553,600 字节。字体增加后仍在容量范围内。</p>
 <p>COM61 已烧录本轮 BLE 应用到 0x10000，esptool 摘要校验通过。升级前后身份一致，LittleFS 正常挂载，SD 插卡检测正常；未格式化内部存储，未写入 SD。启动日志和只读 USB 验证记录位于 <code>out/l2-debug/COM61-0.3.0-*</code>。</p>
 <p>用户在设备上确认：底边上滑菜单、左右滑切页、上下滑列表、右滑解锁和字体排版均正常。十条未读筛选、15 字符 UTF-8 预览、拖动与点击区分及解锁边界通过实际 C++ 辅助函数回归测试。真实多条接收消息、GPS 定位及离线地图文件尚未完成专项验收。</p>
 <p>只读屏幕采集工具：<code>python bin/l2-frame.py --port COM61 --output out/l2-debug/screen.png</code>。它读取实际 RGB565 帧缓冲，不改变配置或触发 LoRa 发射；需要 0.3.0 或以上的 L2 固件。此次尝试采集时 COM61 已断开，未取得最终屏幕 PNG，排版现场结论来自用户反馈。</p>
 <p>手势测试：<code>python test/l2_touch/run.py</code>，调用 PlatformIO 官方 MinGW 工具链；若缺少工具链，先执行 <code>pio pkg install --global --tool platformio/toolchain-gccmingw32</code>。</p>
 <h2 id="040">0.4.0 / 音频、联系人和分层设置</h2>
-<h3 id="_8">操作</h3>
+<h3 id="_7">操作</h3>
 <ul>
 <li>六个主页面依次为 Home / Messages / Contacts / Map / Audio / Settings。右滑下一页，末页回首页；左滑反向循环。输入键盘保留点击输入。底部菜单收窄为 300×58 像素的浮动栏，最后一次操作后 5 秒自动收起，按住期间不隐藏。</li>
 <li>顶部状态栏使用深绿色，底部导航使用深青色。电池位置显示百分比文字和电池轮廓；用户已确认先使用3300mV=0%、4200mV=100%的临时两点曲线，中间线性插值；电压无效时显示 <code>--%</code>。本机真实毫伏可通过诊断读取。换算接口在 <code>L2Battery.h</code>，支持校验后的分段线性插值。</li>
@@ -1808,7 +1708,7 @@ python bin/package-l2.py
 <li>SD 使用 GPIO2/3/1 的一位 SDMMC 和扩展器电源，挂载失败不格式化。录音只创建 <code>/record</code> 和录音文件；音乐文件不会被改写。地图瓦片读取仍未实现。</li>
 <li>音频依赖固定为 <a href="https://github.com/earlephilhower/ESP8266Audio/tree/1.9.7">ESP8266Audio 1.9.7</a> 与 <a href="https://github.com/pschatzmann/arduino-audio-driver/tree/1afd1f2901b7b5413a20b5b6b5ae950dafe48b42">arduino-audio-driver 固定提交</a>。保留依赖许可证；I²C 使用既有 Wire，不重建共享总线。codec 驱动只在主循环操作，PCM和文件流逐步处理。</li>
 </ul>
-<h3 id="_9">验证状态</h3>
+<h3 id="_8">验证状态</h3>
 <ul>
 <li>USB 和 USB+BLE 首轮构建、合并均成功。手势、菜单超时（包含计时回绕）、循环切页、电量插值、Cayenne LPP 截断/未知类型、WAV 格式/恢复识别测试通过；测试执行实际固件辅助函数。</li>
 <li>COM61 写入0.4.0应用时曾发生USB中断。用户手动进入下载模式后完整重写成功，Flash摘要验证通过；随后单独RESET进入应用。未擦除配置/联系人/消息分区。</li>
@@ -1837,8 +1737,8 @@ python bin/package-l2.py
 <h2 id="050-gps">0.5.0 / 地图、导航、GPS 与播放器</h2>
 <p>本节描述当前实现；此前0.4.x现场验收仅适用于当时镜像。用户后来再次反馈WAV回放无声，因此0.5.0音频与GPS仍需重新实机验收。</p>
 <ul>
-<li>根据用户提供的 <code>202004531_Wio Tracker L2_V1.0_SCH_PDF_20260907.pdf</code> 第7、9页，ESP GPIO18接模块TX（GNSS_RX网络），GPIO17接模块RX（GNSS_TX网络）。修正为UART RX18/TX17；接收缓冲先于电源开启，复位保持120ms，增加NMEA计数、可见卫星、校验错误和波特率自动探测。GPS页可开关/复位；只读GET_STATS 0x84返回诊断。尚未以编译通过替代室外定位验证。</li>
-<li>第10页U28麦克风由ES8311 ADCVREF供电，输出接ES7243E右输入；录音显式维持ES8311 ADC/参考供电，PA关闭，ES7243E右时隙16位采集，稳定后丢弃旧DMA。此举保证供电状态，尚不能证明它是静音的唯一根因。</li>
+<li>GPS串口接收已修正；接收缓冲先于电源开启，增加NMEA计数、可见卫星、校验错误和波特率自动探测。GPS页可开关/复位；只读GET_STATS 0x84返回诊断。尚未以编译通过替代室外定位验证。</li>
+<li>录音期间维持麦克风参考供电，关闭扬声器功放，并在输入稳定后丢弃旧DMA数据；录音听感仍需实机验证。</li>
 <li>WAV改为原生有界RIFF/PCM16解析与I2S回放，支持单/双声道、正确PCM偏移与帧对齐；旧文件不改写。新播放器提供真实PCM波形、时长/进度、暂停、前后曲、拖动定位和音量；近静音录音提示。MP3定位按字节/帧近似，CBR时长估算标注约数，Xing/Info帧数可用时采用其时长。参考<a href="https://github.com/cvhviz/CAIRN/blob/main/docs/boards/wio-tracker-l2-pro.md">Cairn板级文档</a>的Library→Now Playing交互，自行实现界面。</li>
 <li>Record为单一切换按钮：录音时波形icon + Press again to stop，并显示时长和电平。录音、播放与提示音仍互斥。</li>
 <li>地图提供四向平移、定位回中、缩放，右上悬浮菜单Track/Waypoint/Tile。Track可创建/停止、列表加载、确认删除；加载路线有独立退出按钮。每5秒仅保存真实有效GPS样本到 <code>/tracks/*.csv</code>，预览最多512点、文件读取上限4MB，完整CSV保留。Waypoint可按当前有效位置新增、查看和确认删除，最多24项。</li>
@@ -1855,7 +1755,7 @@ python bin/package-l2.py
 <ul>
 <li>主页面统一左滑下一页、右滑上一页，末页循环；底部提示和手势回归同步修正。</li>
 <li>首页采用46px高七段数码时钟、秒数、闪动冒号与LED扫描条；只在亮屏且时钟可见时以5fps更新，沿用差分刷新，不引入黑屏过渡。时间来自现有RTC/GPS校时；未校时时显示横线。</li>
-<li>Apps新增指南针与截屏入口。原理图未配置磁力计，指南针明确为GPS行进罗盘：使用最近5秒有效RMC航向且速度至少1节，静止/无定位时不显示虚假航向；不是设备朝向的磁北罗盘。</li>
+<li>Apps新增指南针与截屏入口。指南针明确为GPS行进罗盘：使用最近5秒有效RMC航向且速度至少1节，静止/无定位时不显示虚假航向；不是设备朝向的磁北罗盘。</li>
 <li>地图瓦片根目录改为SD <code>/map/z/x/y.png</code>（XYZ、256×256 PNG），不再从旧 <code>/tiles</code> 读取；原有文件不自动移动。轨迹 <code>/tracks</code>、航点 <code>/waypoints.csv</code> 保持独立。</li>
 <li>截屏默认关闭，独立NVS保存。开启后长按屏幕左上角40×30区域1.2秒截屏，移动取消、单次按下仅触发一次，短按返回仍有效。使用PSRAM冻结帧，分块写入SD <code>/screenshots/L2-xxxxxxxx.bmp</code>，320×240无压缩24位BMP。仅最终写入并重命名成功才显示截屏成功与路径，Tap to dismiss，不自动消失；失败明确提示。不会覆盖已有图片，失败只清理本次临时文件。</li>
 <li>主机测试新增左右切页方向、截屏长按时间/范围/计时回绕、BMP头与RGB565转BGR颜色校验。0.5.1实机界面/截屏验收待确认，之前0.5.0的GPS/音频反馈不替代新版本验收。</li>
