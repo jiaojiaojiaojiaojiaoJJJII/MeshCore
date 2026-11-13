@@ -1,0 +1,1925 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for the open source MeshCore firmware">
+      
+      
+      
+        <link rel="canonical" href="https://meshcore-dev.github.io/meshcore/l2-pro-bringup/">
+      
+      
+        <link rel="prev" href="../kiss_modem_protocol/">
+      
+      
+        <link rel="next" href="../l2-ui-requirements/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Wio Tracker L2 Pro：硬件适配与 Seeed UI 开发版 - MeshCore Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../_stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#wio-tracker-l2-pro-seeed-ui" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="MeshCore Docs" class="md-header__button md-logo" aria-label="MeshCore Docs" data-md-component="logo">
+      
+  <img src="../_assets/meshcore.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MeshCore Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Wio Tracker L2 Pro：硬件适配与 Seeed UI 开发版
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/meshcore-dev/meshcore/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    meshcore-dev/meshcore
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="MeshCore Docs" class="md-nav__button md-logo" aria-label="MeshCore Docs" data-md-component="logo">
+      
+  <img src="../_assets/meshcore.svg" alt="logo">
+
+    </a>
+    MeshCore Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/meshcore-dev/meshcore/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    meshcore-dev/meshcore
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli_commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../companion_protocol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Companion Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Documentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Frequently Asked Questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kiss_modem_protocol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MeshCore KISS Modem Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wio Tracker L2 Pro：硬件适配与 Seeed UI 开发版
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wio Tracker L2 Pro：硬件适配与 Seeed UI 开发版
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        编译
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        原理图核对
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        已接入的流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#meshcore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MeshCore 预设
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设计参考与采用边界
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        尚未达到的 PRD 验收项
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        板上检查顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本轮交付与烧录
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="本轮交付与烧录">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初版 0.2 编译与镜像校验结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#022-com61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.2.2 / COM61 调试记录
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.2.2 / COM61 调试记录">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#022" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.2.2 实机确认
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#023" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.2.3 / 按住状态与刷新
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#024" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.2.4 / 实机复现的立即锁屏与闪黑根因
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.2.4 / 实机复现的立即锁屏与闪黑根因">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#024_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.2.4 最终交付验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#030" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.3.0 / 触屏布局与手势
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.3.0 / 触屏布局与手势">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        验证与交付
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#040" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.4.0 / 音频、联系人和分层设置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.4.0 / 音频、联系人和分层设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音频和 SD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        验证状态
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#040_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.4.0 录音无声现场排查
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#041" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.4.1 / 录音声道与增益修正
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#042-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.4.2 / 右时隙16位输入与录音电平
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.4.2 / 右时隙16位输入与录音电平">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#042" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.4.2 现场复测结论
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#050-gps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.5.0 / 地图、导航、GPS 与播放器
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.5.0 / 地图、导航、GPS 与播放器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#050-com61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.5.0 COM61 实机复测
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#051-maker-sd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.5.1 / 切页、Maker 时钟、指南针与 SD 截屏
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.5.1 / 切页、Maker 时钟、指南针与 SD 截屏">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#051" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.5.1 构建与写入结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#051-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.5.1 后续复测与UI规格归档
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../l2-ui-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wio Tracker L2 Pro UI 产品讨论稿
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nrf52_power_management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    nRF52 Power Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../number_allocations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Number Allocations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../packet_format/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Packet Format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../payloads/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payload Format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qr_codes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QR Codes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../radio_presets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Radio Presets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stats_binary_frames/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stats Binary Frame Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../terminal_chat_cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Terminal Chat CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        编译
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        原理图核对
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        已接入的流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#meshcore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MeshCore 预设
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设计参考与采用边界
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        尚未达到的 PRD 验收项
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        板上检查顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本轮交付与烧录
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="本轮交付与烧录">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初版 0.2 编译与镜像校验结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#022-com61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.2.2 / COM61 调试记录
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.2.2 / COM61 调试记录">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#022" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.2.2 实机确认
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#023" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.2.3 / 按住状态与刷新
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#024" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.2.4 / 实机复现的立即锁屏与闪黑根因
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.2.4 / 实机复现的立即锁屏与闪黑根因">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#024_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.2.4 最终交付验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#030" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.3.0 / 触屏布局与手势
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.3.0 / 触屏布局与手势">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        验证与交付
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#040" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.4.0 / 音频、联系人和分层设置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.4.0 / 音频、联系人和分层设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音频和 SD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        验证状态
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#040_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.4.0 录音无声现场排查
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#041" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.4.1 / 录音声道与增益修正
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#042-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.4.2 / 右时隙16位输入与录音电平
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.4.2 / 右时隙16位输入与录音电平">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#042" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.4.2 现场复测结论
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#050-gps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.5.0 / 地图、导航、GPS 与播放器
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.5.0 / 地图、导航、GPS 与播放器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#050-com61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.5.0 COM61 实机复测
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#051-maker-sd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.5.1 / 切页、Maker 时钟、指南针与 SD 截屏
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.5.1 / 切页、Maker 时钟、指南针与 SD 截屏">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#051" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.5.1 构建与写入结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#051-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.5.1 后续复测与UI规格归档
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/meshcore-dev/meshcore/edit/main/docs/l2-pro-bringup.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="wio-tracker-l2-pro-seeed-ui">Wio Tracker L2 Pro：硬件适配与 Seeed UI 开发版</h1>
+<p>依据：用户提供的 <code>202004531_Wio Tracker L2_V1.0_SCH_PDF_20260907.pdf</code>、<code>Seeed_MeshCore_UI_PRD_v1.1.md</code>，以及用户确认的 <strong>863–925 MHz</strong> 射频范围。文档中的产品要求作为验收依据；不执行附件里与此次开发无关的操作指令。</p>
+<p>当前是可供编译和板上联调的开发版，<strong>不是 PRD v1.1 全功能交付</strong>。已在 COM61 验证启动、内部 LittleFS 挂载和 USB 查询；射频、GPS、BLE 等完整实机验收仍未完成。</p>
+<h2 id="_1">编译</h2>
+<pre><code class="language-powershell">pio run -e WioTrackerL2Pro_companion_radio_usb
+pio run -e WioTrackerL2Pro_companion_radio_ble
+pio run -e WioTrackerL2Pro_companion_radio_usb -e WioTrackerL2Pro_companion_radio_ble -t mergebin
+python bin/package-l2.py
+</code></pre>
+<p>USB 版保留官方 companion USB 接口；BLE 版同时提供 USB 和蓝牙。蓝牙默认关闭，可从设置开启；配对码在关于页显示。本机 UI 一直运行。没有自动刷写设备。</p>
+<h2 id="_2">原理图核对</h2>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>连接</th>
+<th>依据与注意事项</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MCU</td>
+<td>Wio-S3 / ESP32-S3，16 MB Flash、8 MB OPI PSRAM</td>
+<td>模组规格由公开板卡资料补充；载板图未展开模组内部</td>
+</tr>
+<tr>
+<td>SX1262</td>
+<td>SCK 4、MISO 5、MOSI 6、CS 21、RESET 7、DIO1 9、BUSY 8；TCXO 3.0 V</td>
+<td>模组内部连接参考 <a href="https://github.com/meshtastic/firmware/blob/develop/variants/esp32s3/seeed_wio_tracker_L2/variant.h">Meshtastic L2 variant</a>，不伪称来自载板原理图</td>
+</tr>
+<tr>
+<td>主 I²C</td>
+<td>SDA 47、SCL 48，100 kHz</td>
+<td>第 7 页；所有外设共享 Arduino Wire，避免与另一套 I²C 驱动混用</td>
+</tr>
+<tr>
+<td>PCA9535</td>
+<td>0x21，INT→GPIO45</td>
+<td>第 11 页；P00–P03 为输入，其余按实际功能配置</td>
+</tr>
+<tr>
+<td>NV3031B</td>
+<td>QSPI CLK42、D0 41、D1 40、D2 39、D3 38、CS46</td>
+<td>第 7/8/12 页；V1.0 已将 CS 改为 46；320×240 横屏</td>
+</tr>
+<tr>
+<td>LCD 电源 / 复位</td>
+<td>扩展器 P05/P06</td>
+<td>不能用 ESP32 digitalWrite 直接操作扩展器编号</td>
+</tr>
+<tr>
+<td>GT911</td>
+<td>0x5D；复位 P10(bit8)，INT P03(bit3)</td>
+<td>复位时 INT 拉低选择 0x5D，随后恢复输入；触控旋转仍需四角实机校验</td>
+</tr>
+<tr>
+<td>LP5814</td>
+<td><strong>0x2C</strong>，四路并联背光</td>
+<td>原理图第 8 页标注 0x51 与 <a href="https://www.ti.com/document-viewer/LP5814/datasheet/GUID-E8236ACF-A0E5-433C-A32F-D6EA5B9B0A14">TI 数据手册 7.5.2</a> 不一致；实现遵循芯片手册及上游驱动。直流上限合计约 61.2 mA，低于图中 70 mA</td>
+</tr>
+<tr>
+<td>L76KB</td>
+<td>ESP RX17、TX18；电源 bit13，复位 bit9</td>
+<td>第 7/9 页；Q19 反相，扩展器复位高电平为有效；默认关闭，定位更新与 LoRa 发送分开</td>
+</tr>
+<tr>
+<td>SD</td>
+<td>SDMMC 1-bit：CLK2、CMD3、D0 1；电源 bit14，检测 bit2</td>
+<td>第 7/9/11 页；不是 SPI SD；0.4.0 已挂载 SD 文件服务，失败不格式化</td>
+</tr>
+<tr>
+<td>电池</td>
+<td>ADS1115 0x48，AIN0；分压 100k/100k，使能 bit15</td>
+<td>第 6 页；异步单次转换，返回真实毫伏；不估算百分比、剩余时间或充电状态</td>
+</tr>
+<tr>
+<td>音频</td>
+<td>ES8311 0x18、ES7243E 0x14；MCLK10、BCLK11、WS12、OUT16、IN15</td>
+<td>第 7/10 页；CODEC_EN=bit4，PA_EN=bit12；0.4.0 已接入扬声器、麦克风与本地 WAV/MP3</td>
+</tr>
+<tr>
+<td>Grove / OTG</td>
+<td>电源 bit7 / bit11</td>
+<td>默认关闭；不把未知供电状态显示成成功</td>
+</tr>
+</tbody>
+</table>
+<p>扩展器表中 bit8–15 对应丝印 P10–P17。尤其是 bit4：原理图 V1.0 将其接到 <strong>CODEC_EN</strong>，不是旧上游定义中的 SD_CS。</p>
+<h2 id="_3">已接入的流程</h2>
+<ul>
+<li>首次引导：语言与名称、预设选择、GPS 隐私、配置确认；默认 English，GPS 和位置广播关闭。</li>
+<li>首页、消息、联系人、位置、设置五个主入口；320×240 原生绘制，PSRAM 帧缓冲，中文显示与英文/数字本机键盘。</li>
+<li>频道及已保存个人联系人聊天；UTF-8 字节容量校验，频道发送扣除发送者前缀；明确点击发送，短语和 emoji 只填入草稿。</li>
+<li>最近 48 条消息、12 个会话草稿持久化；日志到 64 KiB 时校验压缩快照，通过备份重命名支持中断恢复；草稿空闲 1.5 秒后保存，存储失败时阻止切换到其他会话；消息以完整公钥或频道密钥的 SHA-256 区分对象，同名不混合。频道历史不另存密钥。</li>
+<li>消息提交显示排队；按包哈希匹配实际发射完成/失败，私聊仅在有效 ACK 匹配后显示对方确认。超时显示 Not confirmed；频道发射完成不代表有人收到。手机发送的普通私聊和频道文本同步到本机历史，重试更新同一条记录。</li>
+<li>发现缓存最多 16 个真实收到的广播；可从发现列表添加联系人，也可输入完整 64 位十六进制公钥和名称；展示完整身份，中继不提供普通私聊入口。</li>
+<li>GPS 默认关闭，无坐标不绘制 0,0；GPS 关闭/定位中/有效/上次位置分别显示。开启 GPS 不触发位置广播。</li>
+<li>亮度、语言、时区、设备改名、蓝牙、锁屏、重启和休眠入口；增加 PSRAM/堆/文件系统状态与触控坐标测试页；长消息按字形换行并分页，列表按实际内容范围上下滑动。休眠通过 BOOT(GPIO0) 唤醒；侧键经扩展器连接，不能作为 GPIO0 使用。</li>
+<li>NVS 配置保存与回读；消息日志 CRC、写后回读、损坏/满额报错。内部文件系统兼容 SPIFFS 和 LittleFS，保留既有格式；两种格式都挂载失败时进入恢复页，只有完全擦空的工厂分区自动初始化。</li>
+<li>发射锁在 radio wrapper 的物理发送入口生效，涵盖 ACK、API、转发与广播；未确认时 API 发送请求提前返回 disabled。客户端改无线电参数后需重新本机确认。</li>
+</ul>
+<p>当前时区为固定 UTC 偏移；GPS 提供时钟同步。未同步时不把编译时间展示为真实时间。夏令时数据库与手动时钟页面尚未实现。</p>
+<h2 id="meshcore">MeshCore 预设</h2>
+<p>预设来自 <a href="https://api.meshcore.nz/api/v1/config">MeshCore 官方配置 API</a>，快照日期 2026-11-10；获取方式见仓库 <a href="../radio_presets/">radio_presets.md</a>。共纳入 23 个与硬件频率范围兼容的选项，保留原始频率、BW、SF、CR，以及 1/2/3 字节路径哈希设置；排除 433 MHz 和 927.875 MHz。未自动根据位置选择地区。</p>
+<p>API 没有给出发射功率或地区许可表；本开发版采用 14 dBm，不宣称该功率自动满足所有地区法规。正式发布前仍需提供产品维护的地区/频段/功率限制，不能用社区互通预设代替合规配置。</p>
+<h2 id="_4">设计参考与采用边界</h2>
+<ul>
+<li><a href="https://www.seeedstudio.com/design-system/">Seeed Studio Design System</a>：从官网采样的绿色 <code>#BEED35</code> 与深青 <code>#003A4A</code>；减少装饰、明确文字层级、固定导航、用文字区分状态。设备界面适配小屏幕，不直接照搬营销网页布局。</li>
+<li><a href="https://www.seeedstudio.com/blog/branding-kit/">Seeed 品牌资料</a>：品牌名称保持清晰，开发版暂用文字，不重新绘制近似品牌标志。</li>
+<li><a href="https://github.com/cvhviz/CAIRN/blob/main/docs/boards/wio-tracker-l2-pro.md">Cairn L2 Pro 说明</a>：参考侧边导航、独立设备操作、聊天与设置分层。公开仓库此次可读取的是说明及图片，未导入其固件实现。</li>
+<li>用户给的 Discord 私信链接不可读取；没有声称看过其中的设计。</li>
+</ul>
+<h2 id="prd">尚未达到的 PRD 验收项</h2>
+<table>
+<thead>
+<tr>
+<th>范围</th>
+<th>尚需实现/验证</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D13 / A17</td>
+<td>可检测不同固件 ELF SHA 与恢复出厂，<strong>同一个二进制保留 NVS 重刷无法可靠检测</strong>；需刷写工具/bootloader 写入安装周期标识，不能仅用版本号替代</td>
+</tr>
+<tr>
+<td>消息/频道</td>
+<td>完整会话管理、搜索/置顶/静音/屏蔽、频道创建/导入/密钥分享、房间会话</td>
+</tr>
+<tr>
+<td>Unicode / emoji</td>
+<td>当前只提供五个基础 emoji 的插入；缺字、复杂字素簇、ZWJ、肤色组合、中文输入和最近使用需独立字体/字素方案；不宣称已完成 A18</td>
+</tr>
+<tr>
+<td>GPS / 地图 / 轨迹</td>
+<td>GPS 定时省电、位置发送确认、自动广播、SD 64 点 CSV 轨迹及恢复、离线地图/Wi-Fi 下载/断点续传、waypoint、GPS 移动航向</td>
+</tr>
+<tr>
+<td>音频</td>
+<td>0.4.0 已接入 ES8311/ES7243E、WAV 录制/播放、MP3、模式互斥与中断录音恢复；长时间录制、拔卡/断电和声音质量仍需专项验收。音频不经 LoRa 传输</td>
+</tr>
+<tr>
+<td>设置/安全</td>
+<td>完整地区与功率配置包、自定义参数编辑、配置冲突处理、PIN 安全、数据清理/导入导出、固件更新及安装标记</td>
+</tr>
+<tr>
+<td>工具/求助</td>
+<td>本机日志、遥测、路径诊断、Remote Admin 授权流程、求助确认与结果</td>
+</tr>
+<tr>
+<td>输入与锁定</td>
+<td>0.3.0 已改为右滑解锁；唤醒按键吞键、四角触控、长文本滚动、实体键等效路径和口袋误触仍需完整验收；当前锁屏是防误触锁</td>
+</tr>
+</tbody>
+</table>
+<p>没有接入的功能不作为可成功执行的按钮展示。原理图没有提供磁力计，本机后续指南针应优先支持有效 GPS 移动方向，不能伪造静止朝向。</p>
+<h2 id="_5">板上检查顺序</h2>
+<ol>
+<li>上电核对扩展器、ADS1115、GT911、LP5814 应答及电源时序；首次设置完成前用 SDR/射频仪确认零发射。</li>
+<li>测试 LCD 色序、横屏方向、触控四角与侧键/BOOT；核对 10/25/50/75/100% 背光及万用表电池电压。</li>
+<li>使用相同 MeshCore 预设的第二台设备验证频道/私聊；包含中文、最大字节、队列失败、ACK、超时和重启后历史/草稿。</li>
+<li>GPS 室外定位、关闭/重新开启、无效 NMEA、串口掉线；确认位置获取不改变广播策略。</li>
+<li>BLE 与 USB 并发，手机修改无线电参数触发本机重新确认；连接/断开不能停止本机 UI。</li>
+<li>恢复出厂与不同版本升级重进引导；同二进制重刷作为当前阻塞项单独跟踪。</li>
+</ol>
+<h2 id="_6">本轮交付与烧录</h2>
+<p>版本：Seeed UI development 0.4.2（2026-11-11）。USB 和 USB+BLE 使用同一套本机 UI。</p>
+<p><code>bin/package-l2.py</code> 校验 ESP32-S3 镜像校验和/SHA-256、16 MB Flash 标记、分区大小及合并镜像各组件，随后导出到 <code>out/l2-pro/</code>，同时生成 <code>manifest.json</code>、<code>SHA256SUMS.txt</code> 和烧录说明。</p>
+<ul>
+<li><code>*-merged.bin</code>：完整合并镜像，烧录起始地址 <strong>0x0</strong>；包含 bootloader、分区表、boot_app0 和应用。完整镜像覆盖 NVS 配置区，会重置已保存的设置。</li>
+<li><code>*-app.bin</code>：仅应用，当前分区布局下 app0 地址 <strong>0x10000</strong>；不是首次烧录包。</li>
+<li>合并脚本使用 PlatformIO 实际生成镜像的 Flash 模式（此板为 DIO 引导、QIO Flash + OPI PSRAM 运行配置），并向上返回合并失败的退出码。</li>
+</ul>
+<p>初版交付后，已按用户调试授权通过 COM61 更新应用并读取启动日志；保留原分区表、NVS 和文件系统。触控方向和基本交互已获用户确认；屏幕色序、GPS、射频收发和 BLE 配对仍需专项实机验收；SD 轨迹、离线地图及上表剩余 PRD 项未完成；0.4.0 音频已接入，仍需专项验收。</p>
+<h3 id="02">初版 0.2 编译与镜像校验结果</h3>
+<table>
+<thead>
+<tr>
+<th>构建</th>
+<th>RAM</th>
+<th>Flash</th>
+<th>完整镜像字节数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>USB</td>
+<td>132,356 / 327,680 (40.4%)</td>
+<td>931,677 / 6,553,600 (14.2%)</td>
+<td>997,632</td>
+</tr>
+<tr>
+<td>USB + BLE</td>
+<td>158,640 / 327,680 (48.4%)</td>
+<td>1,548,289 / 6,553,600 (23.6%)</td>
+<td>1,614,240</td>
+</tr>
+</tbody>
+</table>
+<p>两环境均 <code>SUCCESS</code>；镜像校验和、镜像内 SHA-256、芯片/容量标记及四个合并组件逐字节比对通过。校验器另通过截断头部/数据段、错误芯片/容量、数据和摘要损坏共六类拒绝检查。<code>git diff --check</code> 通过。未执行板上运行测试，日志掉电恢复设计仍需真实 SPIFFS/断电验证。</p>
+<h2 id="022-com61">0.2.2 / COM61 调试记录</h2>
+<ul>
+<li>开机 <code>Storage unavailable</code> 根因：0xC90000 分区含有效 <code>littlefs</code> 超级块，而初版只挂载 SPIFFS。SD 卡不是此次故障来源。</li>
+<li>添加稳定的 <code>L2FileSystem</code> 适配层，启动时选择已有 LittleFS 或 SPIFFS；身份、联系人、频道、消息历史、容量统计和恢复出厂都通过同一后端访问。兼容挂载不格式化旧数据。</li>
+<li>存储失败不再永久停机：恢复页明确说明内部 Flash 与 SD 的区别，支持重试，以及二次确认后的初始化。串口恢复命令仅在此页生效；普通 <code>status</code> 和 <code>retry</code> 不会擦除数据。</li>
+<li>原始引导/配置区及完整 3,538,944 字节文件系统分区已备份到 <code>out/l2-debug/</code>，文件系统备份经设备摘要校验一致。</li>
+<li>USB+BLE 修复版只写入应用区 0x10000。设备日志确认 LittleFS 挂载、<code>display=ready</code>、<code>SD=inserted</code>、约 8 MB PSRAM；USB 时间/电池/容量查询正常。首次设置完成前，读取到的发射计数为 0。</li>
+<li>用户反馈键盘按 <code>0</code> 输入 <code>-</code>：原映射相差 180 度。NV3031B 的 panel rotation offset=1 与 GT911 touch offset=2 对应实际 rotation=3；映射改为横屏 X 反转原始 Y，横屏 Y 使用原始 X。同时读取 0x8048–0x804B 的 GT911 实际输出范围，避免固定范围造成比例偏差。</li>
+<li>首次创建 MeshCore 文件时，旧 LittleFS 内尚无身份/偏好/消息文件，Arduino VFS 可能输出 <code>does not exist</code>；这些日志与已挂载后的首次初始化相符，不再导致存储错误页。</li>
+</ul>
+<p>完整镜像仍适合首次安装；已使用此分区布局的设备优先更新 <code>*-app.bin</code>，保留配置区和既有文件系统。SD 内容在此次调试中未写入。</p>
+<h3 id="022">0.2.2 实机确认</h3>
+<p>GT911 产品号为 <code>911</code>、地址 0x5D、原始输出范围 240×320。COM61 应用升级前后设备身份保持一致，内部 LittleFS 挂载及 USB 时间/容量查询正常。用户已确认修复后键盘位置正确；后续反馈的长按解锁及黑屏闪烁在 0.2.3 单独处理。</p>
+<h2 id="023">0.2.3 / 按住状态与刷新</h2>
+<ul>
+<li>GT911 未产生新报告时保持上一触点状态，收到明确的零触点报告才判定松手；短暂总线重试不再打断按住。解决静止按住超过原 150 ms 缓存期限后，2 秒解锁计时被清零的问题。</li>
+<li>移除 UI 额外的 120 ms 松手等待，减少快速连续键盘输入被忽略的情况。</li>
+<li>增加 PSRAM 中的上一帧缓存；新帧只传输变化的连续行，静态区域不重写。使用整行带保持 NV3031B QSPI 的源缓冲区连续布局，避免逐像素绘制和每次整屏传输。</li>
+<li>解锁进度等动画限制在约 30 fps；真实休眠后仍执行一次完整重绘。重复 turnOn/turnOff 调用不再重置面板。</li>
+<li>侧键输入增加 40 ms 消抖，并在触摸按住及结束后 180 ms 内屏蔽灭屏侧键事件。屏幕切换事件与触摸处理共用同一次采样，避免一轮循环先灭屏再被触摸唤醒。</li>
+<li>增加只读诊断：USB <code>CMD_GET_STATS(56)</code> 的 L2 子类型 <code>0x80</code> 返回 ASCII 统计，含帧数、传输行数、传输耗时、休眠/唤醒次数、按住保持次数、松手报告及 I2C 错误数。此命令不发送 LoRa 数据。</li>
+</ul>
+<p>0.2.3 的静态刷新检查通过，但现场点击仍触发休眠；该剩余问题在 0.2.4 定位为计时回绕并修复。0.2.2 完整备份保留于 <code>out/l2-debug/</code>；本轮仍只更新应用区。</p>
+<h2 id="024">0.2.4 / 实机复现的立即锁屏与闪黑根因</h2>
+<p>0.2.3 动态采样记录显示，用户每次点击期间 <code>sleeps/wakes</code> 持续增加，而 I2C 错误计数为 0。进一步追踪发现 <code>UITask::loop()</code> 开头缓存的 <code>now</code> 早于 <code>handle()</code> 更新的 <code>lastActivity=millis()</code>；末尾执行无符号 <code>now-lastActivity</code> 会回绕成极大数，错误触发 60 秒锁屏和 30 秒灭屏。该问题也使草稿空闲计时立即到期。</p>
+<p>0.2.4 在处理完输入事件之后重新读取当前时间，再计算空闲时长。触摸解锁比较同样使用最新时间，避免把本轮刚设置的解锁起点误算为已经过去很久。保留 0.2.3 的按住状态、差分刷新和消抖改进。</p>
+<p>本轮设备端验证仍通过只读统计检查点击期间的休眠/唤醒变化；用户已确认刷入 0.2.4 后长按解锁与点击均正常。</p>
+<h3 id="024_1">0.2.4 最终交付验证</h3>
+<ul>
+<li>COM61 应用区刷写校验成功；升级前后的设备身份一致，LittleFS 挂载及 USB 容量查询正常。内部文件系统未格式化，SD 卡未写入。</li>
+<li>用户确认触控按键位置已正确，并在 0.2.4 现场复测确认：长按解锁正常、点击正常，不再出现此前的立即回锁与闪黑。</li>
+<li>0.2.3 的对比动态统计已保存；0.2.4 最终确认后 COM61 已不可用，因此未补录最后一组动态计数，现场通过结论来自用户反馈。</li>
+<li>两个构建均通过；导出的 BLE 应用 SHA-256 与 COM61 已验证二进制相同。四个导出文件逐一校验长度与 SHA-256，构建对象时间检查确认源码为最新版本。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>构建</th>
+<th>RAM 字节数</th>
+<th>Flash 字节数</th>
+<th>完整镜像字节数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>USB</td>
+<td>132,452</td>
+<td>965,777</td>
+<td>1,031,728</td>
+</tr>
+<tr>
+<td>BLE</td>
+<td>158,736</td>
+<td>1,582,769</td>
+<td>1,648,720</td>
+</tr>
+</tbody>
+</table>
+<h2 id="030">0.3.0 / 触屏布局与手势</h2>
+<ul>
+<li>正文改为 16 像素中英文字体，标题和按钮加粗，辅助文字 14 像素，主要状态使用 24 像素字体。</li>
+<li>移除左侧菜单。首页、消息、联系人、地图、设置占满可用宽度；左右滑切换五个主页面。输入键盘保留点击输入，避免左右手势干扰编辑。</li>
+<li>从底边提示区向上滑，展开底部五项菜单；菜单最后绘制并独占点击区域。下滑菜单或点击外部收起，底层按钮不会收到同一次点击。</li>
+<li>页面内容上下滑动浏览，松手后才判定点击；拖动期间不触发经过的按钮。列表、聊天、长消息、无线电预设和地图详情均按内容边界滚动。</li>
+<li>锁屏取消长按。按住左侧绿色滑块，向右拖到轨道末端后松手解锁；中途回退或明显偏离轨道取消。屏幕熄灭时，第一下触摸只负责点亮。</li>
+<li>锁屏一次显示最多两条未读圆角卡片，列出发信人和正文前 15 个 Unicode 码点，最多保留最新十条未读的浏览入口。向下滑查看较旧卡片，向上滑返回较新卡片；预览不清除未读状态。没有收到消息时显示真实空状态。</li>
+<li>地图页尚未接入 SD 地图文件服务，目前使用栅格回退。有真实 GPS 坐标时显示当前位置；上次有效位置使用空心标记。GPS 关闭或尚未定位时显示提示，不绘制虚构坐标。</li>
+<li>保留 0.2.4 已验证的触控方向、差分刷新和空闲计时修复。</li>
+</ul>
+<h3 id="_7">验证与交付</h3>
+<p>USB 和 USB+BLE 均编译及合并成功；USB Flash 占用 2,494,765 字节，BLE 为 3,112,037 字节，应用分区容量均为 6,553,600 字节。字体增加后仍在容量范围内。</p>
+<p>COM61 已烧录本轮 BLE 应用到 0x10000，esptool 摘要校验通过。升级前后身份一致，LittleFS 正常挂载，SD 插卡检测正常；未格式化内部存储，未写入 SD。启动日志和只读 USB 验证记录位于 <code>out/l2-debug/COM61-0.3.0-*</code>。</p>
+<p>用户在设备上确认：底边上滑菜单、左右滑切页、上下滑列表、右滑解锁和字体排版均正常。十条未读筛选、15 字符 UTF-8 预览、拖动与点击区分及解锁边界通过实际 C++ 辅助函数回归测试。真实多条接收消息、GPS 定位及离线地图文件尚未完成专项验收。</p>
+<p>只读屏幕采集工具：<code>python bin/l2-frame.py --port COM61 --output out/l2-debug/screen.png</code>。它读取实际 RGB565 帧缓冲，不改变配置或触发 LoRa 发射；需要 0.3.0 或以上的 L2 固件。此次尝试采集时 COM61 已断开，未取得最终屏幕 PNG，排版现场结论来自用户反馈。</p>
+<p>手势测试：<code>python test/l2_touch/run.py</code>，调用 PlatformIO 官方 MinGW 工具链；若缺少工具链，先执行 <code>pio pkg install --global --tool platformio/toolchain-gccmingw32</code>。</p>
+<h2 id="040">0.4.0 / 音频、联系人和分层设置</h2>
+<h3 id="_8">操作</h3>
+<ul>
+<li>六个主页面依次为 Home / Messages / Contacts / Map / Audio / Settings。右滑下一页，末页回首页；左滑反向循环。输入键盘保留点击输入。底部菜单收窄为 300×58 像素的浮动栏，最后一次操作后 5 秒自动收起，按住期间不隐藏。</li>
+<li>顶部状态栏使用深绿色，底部导航使用深青色。电池位置显示百分比文字和电池轮廓；用户已确认先使用3300mV=0%、4200mV=100%的临时两点曲线，中间线性插值；电压无效时显示 <code>--%</code>。本机真实毫伏可通过诊断读取。换算接口在 <code>L2Battery.h</code>，支持校验后的分段线性插值。</li>
+<li>Messages 分成 Public channel / Private channel / Contacts。Public 类包含默认 Public 和 #命名频道；Private 使用共享密钥；Contacts 提供一对一会话。新增入口提供公开 #频道和名称+32位十六进制密钥的私有频道。#名称用 SHA-256 的前16字节，与命名频道规则保持一致。</li>
+<li>默认 Public 不覆盖既有频道；新增频道写后校验，使用临时文件和备份重命名保存，启动可从备份恢复。创建不会自动发送消息或广播。</li>
+<li>Contacts 卡片固定显示节点名称。最近15分钟听到广播、私聊或遥测响应时显示绿色，否则红色；这是“最近听到”的指示，不代表远端实时连接或保证可达。启动后没有观察到收包的联系人先显示红色。</li>
+<li>卡片每秒交替显示信号格和电量百分比。信号格来自实际收到的数据 SNR；SNR/RSSI 表示到本机的最后一跳，不冒充远端端到端信号。未知数据显示 <code>--</code>。</li>
+<li>点击卡片在原列表内展开并稍微加宽，显示已上报 GPS 坐标及最近 SNR/RSSI；再点收起。展开会按需请求基础遥测，整个 UI 最多15秒一次，绝不会每秒轮询无线电。对方需允许遥测；电量数据超过1小时失效。远端电量电压使用同一条用户确认的临时曲线换算。</li>
+<li>星星默认灰色，收藏后亮起并排到前面。收藏使用 MeshCore 原生 flags 位，保存到已有联系人存储，与手机侧兼容。展开后的“发消息”进入会话。</li>
+<li>Settings 第一层只有 Basic settings / Advanced settings。Basic：显示/语言、蓝牙、设备名称、提示音、音量、关于。Advanced：无线电、GPS、硬件状态、重启、休眠。两层内容均支持上下浏览。</li>
+</ul>
+<h3 id="sd">音频和 SD</h3>
+<ul>
+<li>参考仓库 <code>src/helpers/ui/buzzer.h</code> 与 <code>ui-orig/UITask.cpp</code> 的原版 RTTTL 音符，使用 ES8311/I2S 输出开机、软件休眠/重启、私聊、频道、发送和 ACK 提示音。发送音仅对应匹配的文本消息；普通转发包不发声。物理断电无法播放关机音。</li>
+<li>Audio → Recording：录音列表和 Record 按钮。点击 Record 录音，点击 Stop 保存，再点击文件回放。路径 <code>/record/rec-xxxxxxxx.wav</code>，16 kHz、16位、单声道PCM；单次最长30分钟。录音期间不允许同时开始另一路播放。</li>
+<li>每秒更新 WAV 文件头并刷新；录制中使用 <code>.wav.part</code>，正常结束后重命名。重新挂卡时只恢复 <code>/record</code> 内格式与本固件一致的中断录音，不覆盖同名成品。仍需真实断电测试验证卡自身缓存的影响。</li>
+<li>Audio → Music：读取 <code>/music</code> 中的 MP3（用户已更正原要求中的 MP4）。文件列表最多128项；过长文件名跳过；支持常见8/11.025/16/22.05/24/32/44.1/48 kHz输出采样率，12 kHz等未支持的采样率会报错，不变速播放。</li>
+<li>播放、录音和提示音互斥。录音或音乐播放时不插入消息提示音，以免录入扬声器声音或抢占 I2S；界面消息仍更新。默认音量35%，可在 Basic settings 中调整，设置持久保存。</li>
+<li>SD 使用 GPIO2/3/1 的一位 SDMMC 和扩展器电源，挂载失败不格式化。录音只创建 <code>/record</code> 和录音文件；音乐文件不会被改写。地图瓦片读取仍未实现。</li>
+<li>音频依赖固定为 <a href="https://github.com/earlephilhower/ESP8266Audio/tree/1.9.7">ESP8266Audio 1.9.7</a> 与 <a href="https://github.com/pschatzmann/arduino-audio-driver/tree/1afd1f2901b7b5413a20b5b6b5ae950dafe48b42">arduino-audio-driver 固定提交</a>。保留依赖许可证；I²C 使用既有 Wire，不重建共享总线。codec 驱动只在主循环操作，PCM和文件流逐步处理。</li>
+</ul>
+<h3 id="_9">验证状态</h3>
+<ul>
+<li>USB 和 USB+BLE 首轮构建、合并均成功。手势、菜单超时（包含计时回绕）、循环切页、电量插值、Cayenne LPP 截断/未知类型、WAV 格式/恢复识别测试通过；测试执行实际固件辅助函数。</li>
+<li>COM61 写入0.4.0应用时曾发生USB中断。用户手动进入下载模式后完整重写成功，Flash摘要验证通过；随后单独RESET进入应用。未擦除配置/联系人/消息分区。</li>
+<li>初次运行只读诊断：身份指纹与旧版一致，电压4199mV，LittleFS使用52/3456KiB，<code>codec=1 sd=1 i2s=1 hz=16000</code>，触控I²C错误0。用户已确认进入设置引导并听到开机提示音。</li>
+<li>录音回放、MP3、真实多节点遥测、收藏/频道重启保存及实际断电恢复仍需现场确认；后续可用实测电量曲线替换临时两点曲线。初次已测试镜像与记录在 <code>out/l2-debug/COM61-0.4.0-*</code>，后续导出以 SHA-256 清单区分。</li>
+<li><code>python bin/l2-status.py --port COM61</code> 只读查询设备身份摘要、存储和显示/音频诊断；USB GET_STATS 的 <code>0x82</code> 为音频状态，含录音字节数、采样峰值和已输出PCM帧数，不触发无线电发送。</li>
+</ul>
+<h3 id="040_1">0.4.0 录音无声现场排查</h3>
+<p>用户已确认开机提示音，但反馈录音或回放没有声音。现场已读取到359,936字节录音数据、采样峰值8191，说明录音写入和数字采样存在；仅非零峰值不能证明录入了有效语音。正在通过只读WAV数据接口区分直流/错误声道和回放问题，未将“已采样”当作“语音回放验收通过”。</p>
+<h2 id="041">0.4.1 / 录音声道与增益修正</h2>
+<p>已读取两段真实录音尾部：AC RMS 约0.48，16位采样仅±1~2，接近静音；WAV头均为合法16kHz/16位/单声道。检查驱动发现ES7243E START会将初始化的PGA +30dB重写为0dB，且原采集只保存一个输入声道。</p>
+<p>0.4.1 在START后恢复两路PGA +30dB，将左右输入以32位中间值求平均存为单声道；单扬声器播放同样合并左右声道，避免丢失仅在另一声道的内容。增加L/R分别峰值诊断，以实测确认哪一路收到有效语音。先前只保存静音声道的录音无法补回未保存的另一路数据，需要重新录制。增益/声道修正后的听感仍以现场复测为准。</p>
+<p>电量已按用户确认的临时端点3300mV=0%、4200mV=100%线性估算；后续收到实测曲线可替换。只读录音尾部分析工具为<code>bin/l2-recording.py</code>，小块USB传输避免大帧超时；设备文件不会被改写。</p>
+<p>0.4.1 应用区写入与Flash摘要校验通过，身份保持一致，SD与codec仍就绪。一次新录音采样统计为左峰值2047、右峰值10540、混合峰值5270，共246272字节；与此前只保留左声道的实现相比，现在保存两路输入的合成音频。此数字证据不替代现场听感反馈。</p>
+<p>最终0.4.1构建：USB静态RAM164032字节、Flash2691709字节；BLE静态RAM190312字节、Flash3308065字节。四个导出文件的长度和SHA-256均复核，构建时间晚于全部L2/UI源码；源码差异空白检查通过。</p>
+<h2 id="042-16">0.4.2 / 右时隙16位输入与录音电平</h2>
+<p>0.4.1 现场反馈仍为录音无声，MP3播放正常。单一串口会话读取八段录音中间波形，六段AC RMS约0.47（近静音），两段分别约33和308；因此未将0.4.1的非零瞬态峰值视为修复成功。</p>
+<p>进一步核对 <a href="https://github.com/zxw19/xiaozhi-esp32/blob/board/seeed-wio-tracker-l2-pro/main/boards/seeed-wio-tracker-l2-pro/l2_audio_codec.cc">L2板级音频实现</a> 与其 <a href="https://github.com/zxw19/xiaozhi-esp32/blob/board/seeed-wio-tracker-l2-pro/main/boards/seeed-wio-tracker-l2-pro/wio_l2_board.cc">板级增益说明</a>：麦克风在RIGHT时隙，使用16位输入；板级demo曾在PGA之外增加显著软件增益。这里将其作为对应板级实现的参考，仍以本机录音实测为验收依据。</p>
+<p>0.4.2 使用I2S ONLY_RIGHT、16位接收，并显式配置ES7243E 16位I2S与33dB PGA。录音加入峰值目标16000、最大128倍的缓变数字电平控制，快速降低增益避免突发溢出；静音底噪不增益，使用32位有符号中间计算和16位饱和保护。处理仅用于录音保存，不修改已验证的MP3播放。测试覆盖静音、微弱信号、正负极性、满幅输入和增益上限，已通过。</p>
+<p>最新完成的录音名称持久保存，录音列表将其置顶并标注LATEST/最新录音，停止后回到列表顶部。旧静音录音原样保留，不被增益处理或覆盖。</p>
+<h3 id="042">0.4.2 现场复测结论</h3>
+<p>用户已明确确认：0.4.2 新录音和回放正常；MP3播放正常；开机提示音正常。录音文件仍保存到<code>/record</code>，最新文件置顶标注。此次应用区更新均经过Flash摘要校验，不擦除配置或SD内容。</p>
+<p>设备在用户完成0.4.2复测后已断开COM61，最后一次补录串口状态未取得；不把0.4.1的身份/运行统计当成0.4.2重新采集的结果。现场验收依据和已刷入BLE应用SHA-256记录在<code>out/l2-debug/COM61-0.4.2-validation.json</code>。</p>
+<p>完整RF/GPS、多节点在线与遥测、收藏/频道真实掉电恢复、长期录音与拔卡测试仍需专项验收。软件功能与当前基本音频实机验证不等同于完整PRD交付。</p>
+<p>最终USB一致性补编已完成（Flash2693409字节），包含与BLE相同的PCM有符号边界修正。四个最终导出文件的长度/SHA-256、两个构建晚于L2/UI全部源码、音频对象晚于电平处理头文件均检查通过。导出BLE应用摘要与已刷入且获用户确认的0.4.2镜像一致。</p>
+<h2 id="050-gps">0.5.0 / 地图、导航、GPS 与播放器</h2>
+<p>本节描述当前实现；此前0.4.x现场验收仅适用于当时镜像。用户后来再次反馈WAV回放无声，因此0.5.0音频与GPS仍需重新实机验收。</p>
+<ul>
+<li>根据用户提供的 <code>202004531_Wio Tracker L2_V1.0_SCH_PDF_20260907.pdf</code> 第7、9页，ESP GPIO18接模块TX（GNSS_RX网络），GPIO17接模块RX（GNSS_TX网络）。修正为UART RX18/TX17；接收缓冲先于电源开启，复位保持120ms，增加NMEA计数、可见卫星、校验错误和波特率自动探测。GPS页可开关/复位；只读GET_STATS 0x84返回诊断。尚未以编译通过替代室外定位验证。</li>
+<li>第10页U28麦克风由ES8311 ADCVREF供电，输出接ES7243E右输入；录音显式维持ES8311 ADC/参考供电，PA关闭，ES7243E右时隙16位采集，稳定后丢弃旧DMA。此举保证供电状态，尚不能证明它是静音的唯一根因。</li>
+<li>WAV改为原生有界RIFF/PCM16解析与I2S回放，支持单/双声道、正确PCM偏移与帧对齐；旧文件不改写。新播放器提供真实PCM波形、时长/进度、暂停、前后曲、拖动定位和音量；近静音录音提示。MP3定位按字节/帧近似，CBR时长估算标注约数，Xing/Info帧数可用时采用其时长。参考<a href="https://github.com/cvhviz/CAIRN/blob/main/docs/boards/wio-tracker-l2-pro.md">Cairn板级文档</a>的Library→Now Playing交互，自行实现界面。</li>
+<li>Record为单一切换按钮：录音时波形icon + Press again to stop，并显示时长和电平。录音、播放与提示音仍互斥。</li>
+<li>地图提供四向平移、定位回中、缩放，右上悬浮菜单Track/Waypoint/Tile。Track可创建/停止、列表加载、确认删除；加载路线有独立退出按钮。每5秒仅保存真实有效GPS样本到 <code>/tracks/*.csv</code>，预览最多512点、文件读取上限4MB，完整CSV保留。Waypoint可按当前有效位置新增、查看和确认删除，最多24项。</li>
+<li>瓦片读取 <code>/tiles/z/x/y.png</code>，XYZ/WebMercator、256×256 PNG、单文件上限512KB，缩放3~18；无瓦片显示栅格。坐标/路径规则参见<a href="https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames">OSM Slippy map tilenames</a>。没有定位或载入轨迹时不伪造定位点。</li>
+<li>首页改为单栏Messages/Contacts/Apps及快捷入口，底部+弹窗可增删最多8个入口，独立NVS校验保存。附属页面统一左上橙色箭头返回；主页面右滑下一页、左滑上一页并循环，弹窗和播放器滑杆捕获手势防止误切页。</li>
+<li>Basic包含LoRa；Advanced包含红色Administration，其内Factory reset/Reboot/Shut down均须界面确认。Factory reset会清除设备内部身份/配置/联系人，保留SD；此功能未在用户设备上执行测试。</li>
+<li>主机回归覆盖手势、WAV块/截断/对齐、MP3头、经纬度投影/日期变更线、轨迹CSV、PNG瓦片头与GPS脚位。USB/BLE固件构建和镜像校验结果以导出manifest为准。新界面、GPS搜星、录音听感和SD读写仍待0.5.0实机复测。</li>
+</ul>
+<h3 id="050-com61">0.5.0 COM61 实机复测</h3>
+<p>BLE应用SHA-256 <code>022363e515806c4fff9b1e072670622c13fdfc441d659a3b8af7490c8cef0caa</code> 已在0x10000完整写入、Flash摘要校验通过。用户确认正常进入首页、新录音回放与音量调节正常。升级前后身份指纹一致，内部存储60/3456KiB，SD/codec/I2S就绪，触控错误0。</p>
+<p>GPS实测 <code>on=1 baud=9600 rx=18330 good=483 bad=0 view=13 used=6 fix=1 age=270 RX=18 TX=17</code>，证明串口接收与真实卫星定位均已恢复。未读取或公开精确位置。录音听感依据用户现场复测；本次串口音频统计未在录制/播放中采集，不用空闲计数代替听感确认。</p>
+<p>轨迹新增/删除/重载、实际瓦片、快捷入口持久化及全部界面的视觉验收仍待专项测试；未执行用户设备恢复出厂或删除SD文件。验证记录见 <code>out/l2-debug/COM61-0.5.0-validation.json</code>。</p>
+<h2 id="051-maker-sd">0.5.1 / 切页、Maker 时钟、指南针与 SD 截屏</h2>
+<ul>
+<li>主页面统一左滑下一页、右滑上一页，末页循环；底部提示和手势回归同步修正。</li>
+<li>首页采用46px高七段数码时钟、秒数、闪动冒号与LED扫描条；只在亮屏且时钟可见时以5fps更新，沿用差分刷新，不引入黑屏过渡。时间来自现有RTC/GPS校时；未校时时显示横线。</li>
+<li>Apps新增指南针与截屏入口。原理图未配置磁力计，指南针明确为GPS行进罗盘：使用最近5秒有效RMC航向且速度至少1节，静止/无定位时不显示虚假航向；不是设备朝向的磁北罗盘。</li>
+<li>地图瓦片根目录改为SD <code>/map/z/x/y.png</code>（XYZ、256×256 PNG），不再从旧 <code>/tiles</code> 读取；原有文件不自动移动。轨迹 <code>/tracks</code>、航点 <code>/waypoints.csv</code> 保持独立。</li>
+<li>截屏默认关闭，独立NVS保存。开启后长按屏幕左上角40×30区域1.2秒截屏，移动取消、单次按下仅触发一次，短按返回仍有效。使用PSRAM冻结帧，分块写入SD <code>/screenshots/L2-xxxxxxxx.bmp</code>，320×240无压缩24位BMP。仅最终写入并重命名成功才显示截屏成功与路径，Tap to dismiss，不自动消失；失败明确提示。不会覆盖已有图片，失败只清理本次临时文件。</li>
+<li>主机测试新增左右切页方向、截屏长按时间/范围/计时回绕、BMP头与RGB565转BGR颜色校验。0.5.1实机界面/截屏验收待确认，之前0.5.0的GPS/音频反馈不替代新版本验收。</li>
+</ul>
+<h3 id="051">0.5.1 构建与写入结果</h3>
+<p>USB/BLE最终构建、全部L2/UI源码及关键头文件时间一致性检查、镜像结构/摘要/合并地址校验通过。USB应用2738816字节，BLE应用3355600字节。BLE应用SHA-256 <code>96b022704ee44452894fc9637d8df59e837e4a96fe1cb9d23c65011794412450</code> 已写入COM61的0x10000，Flash摘要验证通过，未更新NVS或内部文件系统区域。</p>
+<p>写入后保持下载模式，已请求用户仅RESET启动。随后电脑暂未枚举COM61（只剩蓝牙COM22/23），未获得0.5.1运行状态；启动、时钟/切页和SD截屏现场验收仍待用户反馈，不将升级前0.5.0状态当成新版验证。升级前身份/存储记录和本次刷写记录位于 <code>out/l2-debug/COM61-before-0.5.1-runtime.json</code>、<code>COM61-0.5.1-flash.json</code>。</p>
+<h3 id="051-ui">0.5.1 后续复测与UI规格归档</h3>
+<p>用户随后明确确认切页/时钟正常，以及截屏成功提示和点击关闭正常。COM61已重新出现，本次只读身份核对一致、内部存储60/3456KiB、SD/codec就绪；已获取并查看首页与锁屏实际帧缓冲。此结果更新上节“启动复测待确认”的历史状态，不表示全场景通过。</p>
+<p>完整逐页需求见<a href="../l2-ui-requirements/">l2-ui-requirements.md</a>，含44个Page、74个Action、返回/跳转/堆叠与59张图（2实机、57源码结构图）。<a href="../l2-ui-gallery.html">页面图集</a>可离线查看。其他页图明确标注非实拍，不借文档采图改固件或构造测试数据。验收记录见out/l2-debug/COM61-0.5.1-validation.json。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.action.edit", "content.code.copy", "search.highlight", "search.suggest"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>
