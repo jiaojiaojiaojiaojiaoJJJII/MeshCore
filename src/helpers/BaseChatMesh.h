@@ -119,6 +119,10 @@ protected:
   virtual uint32_t calcFloodTimeoutMillisFor(uint32_t pkt_airtime_millis) const = 0;
   virtual uint32_t calcDirectTimeoutMillisFor(uint32_t pkt_airtime_millis, uint8_t path_len) const = 0;
   virtual void onSendTimeout() = 0;
+  // Called only after a text packet has entered the outbound queue. Optional UI hook.
+  virtual void onTextQueued(mesh::Packet* pkt, const ContactInfo* contact,
+                            const mesh::GroupChannel* channel, uint32_t timestamp,
+                            const char* text, uint32_t ack, uint32_t timeout) {}
   virtual void onChannelMessageRecv(const mesh::GroupChannel& channel, mesh::Packet* pkt, uint32_t timestamp, const char *text) = 0;
   virtual void onChannelDataRecv(const mesh::GroupChannel& channel, mesh::Packet* pkt, uint16_t data_type,
                                  const uint8_t* data, size_t data_len) {}

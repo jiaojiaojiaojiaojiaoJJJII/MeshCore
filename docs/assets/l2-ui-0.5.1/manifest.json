@@ -1,0 +1,362 @@
+{
+  "version": "0.5.1",
+  "audience": "product_discussion",
+  "date": "2026-11-12",
+  "pages": 44,
+  "images": [
+    {
+      "file": "device-home.png",
+      "title": "首页 · 实机截图",
+      "type": "device_screenshot",
+      "sha256": "a6c3d84665db2995d157ef6b4fd9d089d9effc3129e70f497d9d0c545d2ca816"
+    },
+    {
+      "file": "device-current.png",
+      "title": "锁屏 · 实机截图",
+      "type": "device_screenshot",
+      "sha256": "5040fbbaa1ef30ecc7edb6c6a7181a47e8015d1a3d3ca478b1a3e949e2c5d962"
+    },
+    {
+      "file": "Home.svg",
+      "title": "首页 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "22836d5faef9d3e22d5763683ac00e482fc36570305cc29cfbf2479d45801f7e"
+    },
+    {
+      "file": "Chats.svg",
+      "title": "消息首页 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "cff81e28f17917cb02c19b93c48d80f5b74a70765f312eff5725301cf4575841"
+    },
+    {
+      "file": "Contacts.svg",
+      "title": "联系人主页 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "d3c1b016fb686c9d6aa3f7cddc30cec55b796ed4aa6b2816bc3ec2e3e5ae6937"
+    },
+    {
+      "file": "Location.svg",
+      "title": "地图主页 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "8bcc6c374bf1df899d2bc678ba1069668780f4d7c32bf68bc82f28e2c66f3283"
+    },
+    {
+      "file": "Settings.svg",
+      "title": "设置首页 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "d2deb45172a61c92b04023308183d9c09a15b047d2d34fbe2db42992de770e9b"
+    },
+    {
+      "file": "Conversation.svg",
+      "title": "会话 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "06c82880a58062969d28b80c67b8bad183f28a0985df407cef0ad3c0c4577482"
+    },
+    {
+      "file": "Composer.svg",
+      "title": "消息编辑 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "3a8717218a377e66c2e2349a3f9b36d3f590456acad6ac171ffbbc58069c6976"
+    },
+    {
+      "file": "ContactDetail.svg",
+      "title": "节点详情 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "92c0d099adb18add4e11d5684b167715f4dc3a70d06083f9f5291617de384f3c"
+    },
+    {
+      "file": "Discover.svg",
+      "title": "发现设备 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "47930d7fa81e42980bb9081ae303cab5bf4683835e92a5a51194af2e69d35a8b"
+    },
+    {
+      "file": "Radio.svg",
+      "title": "LoRa地区预设 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "0b7b5c8d38eb2a77b6c3fc33379376ff778fdebb1bed2c0daf3ef020f725de1e"
+    },
+    {
+      "file": "Quick.svg",
+      "title": "快捷操作 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "822cef3069aeacf004f57c5dc9fd946db236113bdcbcfa1ff63a0f84e0b8e52c"
+    },
+    {
+      "file": "Locked.svg",
+      "title": "锁屏 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "12335172d7f5ecda30a77d51310c4941ba01cb7c41b50b927b9bf42ebc839199"
+    },
+    {
+      "file": "About.svg",
+      "title": "关于设备 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "e463cadcec80f89523a03c24698d05cc3dfb5e1e9ec5298294e31c90933b3ede"
+    },
+    {
+      "file": "SetupName.svg",
+      "title": "引导1 名称语言 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "d9495a02b1524b85f4bd4f65f169a5999c60439b1bfe55b841be9d0b48a59061"
+    },
+    {
+      "file": "SetupRadio.svg",
+      "title": "引导2 地区预设 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "82e6c2e58d9aa1aa00414249896d84a8983d5a4d0eb931da92c1503ac112c1eb"
+    },
+    {
+      "file": "SetupPrivacy.svg",
+      "title": "引导3 定位隐私 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "bc5ea30b5cdcbe6c54c1efe68d54b93fae874897c65bed6761e9ce9f146f36be"
+    },
+    {
+      "file": "SetupFinish.svg",
+      "title": "引导4 确认开始 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "36e2c5e5f2d82f3761f3339c0391583ad8fda74ef7f830d99c8f56acee45504a"
+    },
+    {
+      "file": "Input.svg",
+      "title": "通用输入 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "36e088bd2803004f638c3353518b25c7fc2b72aa8c5865d2391fb32cf1fb53ce"
+    },
+    {
+      "file": "Emoji.svg",
+      "title": "表情选择 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "b9813469510a1f92b4aca18e52bbb4e80f2ec2efdecb09a82e22bfc8b5e437da"
+    },
+    {
+      "file": "Confirm.svg",
+      "title": "二次确认 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "ad67928bfc2be3a2db3d266a452ab6ae9e722a7bb20838e7fb361bdf75f02540"
+    },
+    {
+      "file": "MessageDetail.svg",
+      "title": "消息详情 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "7df95980dae0e70666c7dfdcfac6e0027a26b220cda912f7d30e9e7e0a3962b8"
+    },
+    {
+      "file": "Phrases.svg",
+      "title": "快捷短语 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "a0f6c8e8c122b9e464575de53b6c5a5039c83dfd3b3a2c35d65141d738d630b8"
+    },
+    {
+      "file": "Diagnostics.svg",
+      "title": "硬件状态 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "dd5a5931645a07cf41db197c5e1c323e2070c93d894f454378c4709058222b6b"
+    },
+    {
+      "file": "TouchTest.svg",
+      "title": "触控测试 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "4e4dbc87a46eb481d906afbd5ff3100fdf7fc8c830e75925c2155cf52bdd7bba"
+    },
+    {
+      "file": "Audio.svg",
+      "title": "音频主页 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "64b117e15393a0f0ef0aac9cbe34d74ab4fdfb2283b7dd119429a2ab06c2c148"
+    },
+    {
+      "file": "PublicChannels.svg",
+      "title": "公开频道列表 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "d240978b93ff806a076e5454770ce0c0dfc1b670522df1aeb4d1a1ddcfabc700"
+    },
+    {
+      "file": "PrivateChannels.svg",
+      "title": "私有频道列表 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "d21bf1079ada4adfed6865d46edca84c0cfcc6015c032ba25204dab82440f811"
+    },
+    {
+      "file": "ChatContacts.svg",
+      "title": "消息中的联系人 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "e1da42e87737eeed40554b91cc97c0f2dbb51dd22d68439b123d264dd6531c54"
+    },
+    {
+      "file": "BasicSettings.svg",
+      "title": "基础设置 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "439e278fd8088364286ef2e7fb243aac0184a8ee1818ac3f271905113f631f2c"
+    },
+    {
+      "file": "AdvancedSettings.svg",
+      "title": "高级设置 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "e31ba6b0893458fac43d1b3169763a1db004591554bf7be0804d9b854c6b9c55"
+    },
+    {
+      "file": "Recordings.svg",
+      "title": "录音列表/录制 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "e6e8d1e4f28bb47f5ad3bdd529af165d1be3388ec869c413eed6f62e6cd4c128"
+    },
+    {
+      "file": "Music.svg",
+      "title": "音乐文件列表 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "c9edbdbb5a53e48e37704ec90a6d677325e4defa1b075ce2b6ac07aa390d2a23"
+    },
+    {
+      "file": "NewChannel.svg",
+      "title": "新增频道类型 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "b007e19c15eb8de5cc3aea792cc1e1d28e2cfa3f6462d88b72fb70df3cb365e8"
+    },
+    {
+      "file": "AudioPlayer.svg",
+      "title": "正在播放 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "bbda1b1ff7f04503143c8cacf621d6bca3fd56dd5bbde3b44563d190a3bd6d77"
+    },
+    {
+      "file": "Tracks.svg",
+      "title": "轨迹管理 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "4bbe109944260a0702b24fc8a5fc9eb00ac386fb1e270d0f91196d68cf9efe6d"
+    },
+    {
+      "file": "TrackDetail.svg",
+      "title": "轨迹操作 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "6b517e198b50ecdb5324e07c161065d5b8fe2f2daf69684cae834561d18f206b"
+    },
+    {
+      "file": "Waypoints.svg",
+      "title": "航点列表 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "f20a4d22cdc3d22d0cf2b24b13cd8514bd279368414926af576a8d0abdc57e19"
+    },
+    {
+      "file": "WaypointDetail.svg",
+      "title": "航点操作 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "a3518b52c82828c66de11be2a6e2d0398e530b273441057011416482f11f8f2e"
+    },
+    {
+      "file": "Tiles.svg",
+      "title": "离线瓦片 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "1de74d0a50487d87dabd0849ac47a6c0982460e1e22ef9da2a02e8e027e74edb"
+    },
+    {
+      "file": "GPSStatus.svg",
+      "title": "GPS状态 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "51b0a3525334b7ee04baad914bace790889c18437e90aa0965dec3ef469a47e0"
+    },
+    {
+      "file": "Apps.svg",
+      "title": "应用列表 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "194577b0c346175d5af143884d51e4fa21e913ba882f96824d6fde07dda1b34a"
+    },
+    {
+      "file": "Administration.svg",
+      "title": "管理操作 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "cf1e2ec98b6a38c0f0e9a64379981a7a2f71e1151b5aeff3aa82a51a018b4fb8"
+    },
+    {
+      "file": "Compass.svg",
+      "title": "GPS行进罗盘 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "a88a46fc61512fb375b68d2ea16c304d92e71066e3d135a5829bd113a928f54e"
+    },
+    {
+      "file": "ScreenshotSettings.svg",
+      "title": "截屏设置 · 页面示意图",
+      "type": "page_diagram",
+      "sha256": "852dd8baa3513cd4b89c7772c4b33fcd21abe039984b8ae0dce63af6bc059204"
+    },
+    {
+      "file": "Input-NodeName.svg",
+      "title": "设备名称 · 填写示意图",
+      "type": "page_diagram",
+      "sha256": "1123ce45cb3aa0327de6fed918a82c40ef5568babd66f860613601dc39bcbcd6"
+    },
+    {
+      "file": "Input-ContactKey.svg",
+      "title": "联系人公钥 · 填写示意图",
+      "type": "page_diagram",
+      "sha256": "164f8123ad5b2456f129039eabfab8eb81e8df9367325ff27aa892fcee0750d5"
+    },
+    {
+      "file": "Input-ContactName.svg",
+      "title": "联系人名称 · 填写示意图",
+      "type": "page_diagram",
+      "sha256": "183fe43f35f73a73f6d3d259633e5728502aea8d639a49f831696f84923869a4"
+    },
+    {
+      "file": "Input-PublicChannelName.svg",
+      "title": "公开频道名 · 填写示意图",
+      "type": "page_diagram",
+      "sha256": "120a7baa6d42d37821aa3af7baeef8d8a65fb59808bfd03ddff82f176ff19cd4"
+    },
+    {
+      "file": "Input-PrivateChannelName.svg",
+      "title": "私有频道名 · 填写示意图",
+      "type": "page_diagram",
+      "sha256": "68152a569bee04dfcdf2e06c811fb778e82b50cad505557a114c99fcf04da76f"
+    },
+    {
+      "file": "Input-ChannelKey.svg",
+      "title": "私有频道密钥 · 填写示意图",
+      "type": "page_diagram",
+      "sha256": "c5f731fce39fbf006a4886addd842ea29fbc3534fc9e17748c213e15083b710f"
+    },
+    {
+      "file": "OV-01.svg",
+      "title": "底部主导航 · 交互示意图",
+      "type": "page_diagram",
+      "sha256": "8498dd309c5bacedd8f1eb6010a8e47856743a89a430b23fa789731b2387c461"
+    },
+    {
+      "file": "OV-02.svg",
+      "title": "首页快捷入口浮窗 · 交互示意图",
+      "type": "page_diagram",
+      "sha256": "bb7439c4557b8fb28f0a6f5e8bdfc26687bba542fbc47b7388276ca3a9c8eaa8"
+    },
+    {
+      "file": "OV-03.svg",
+      "title": "地图竖向菜单 · 交互示意图",
+      "type": "page_diagram",
+      "sha256": "e6eacfd2e15ec5649658f32410f707fce423cd89de8399620db600b61b4ddd8b"
+    },
+    {
+      "file": "OV-04.svg",
+      "title": "普通状态提示 · 交互示意图",
+      "type": "page_diagram",
+      "sha256": "48548aee4cd0e012bf548260d4abcec8648a237ff59f24e7ce121dabd908b342"
+    },
+    {
+      "file": "OV-05.svg",
+      "title": "截屏成功提示 · 交互示意图",
+      "type": "page_diagram",
+      "sha256": "1fa063680aa7c85c39192fd64db9e7d8bdf72a2c2a83ff56b6c84f09cce529f4"
+    },
+    {
+      "file": "OV-06.svg",
+      "title": "错误提示 · 交互示意图",
+      "type": "page_diagram",
+      "sha256": "a3735a1ed8deaeb94ce8d2e0a397332c29da3299ebd4d59ffb197ee41916d7ee"
+    },
+    {
+      "file": "layers.svg",
+      "title": "页面层级 · 示意图",
+      "type": "page_diagram",
+      "sha256": "97e3e8388de9bf4fd414629fefa23c4ba8e7db99ca9b0459a182ca706b95702a"
+    }
+  ]
+}

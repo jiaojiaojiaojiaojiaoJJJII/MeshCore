@@ -102,8 +102,12 @@ MultiSerialInterface interface_manager;
   #include <LittleFS.h>
   DataStore store(LittleFS, rtc_clock);
 #elif defined(ESP32)
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+  DataStore store(l2FS, rtc_clock);
+#else
   #include <SPIFFS.h>
   DataStore store(SPIFFS, rtc_clock);
+#endif
 #endif
 
 /* GLOBAL OBJECTS */
@@ -178,7 +182,11 @@ void setup() {
   store.begin();
   the_mesh.begin();
 #elif defined(ESP32)
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+  if (!l2BeginStorage()) l2StorageRecovery(disp);
+#else
   SPIFFS.begin(true);
+#endif
   store.begin();
   the_mesh.begin();
 #else
@@ -277,7 +285,7 @@ void setup() {
   the_mesh.startInterface(interface_manager);
   sensors.begin();
 
-#if ENV_INCLUDE_GPS == 1
+#if ENV_INCLUDE_GPS == 1 && !defined(SEEED_WIO_TRACKER_L2_PRO)
   the_mesh.applyGpsPrefs();
 #endif
 

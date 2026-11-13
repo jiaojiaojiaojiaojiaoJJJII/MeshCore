@@ -99,6 +99,13 @@ public:
       virtual void onChannelDataRecv(mesh::Packet *pkt, const mesh::GroupChannel &channel, uint16_t data_type,
                                      const uint8_t *data, size_t data_len) { }
       virtual void onACKRecv(uint32_t ack_crc) { }
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+      virtual void onTextQueued(mesh::Packet* pkt, const ContactInfo* contact,
+                                const mesh::GroupChannel* channel, uint32_t timestamp,
+                                const char* text, uint32_t ack, uint32_t timeout) { }
+      virtual void onTextTransmit(mesh::Packet* pkt, bool success) { }
+      virtual void onPeerTelemetry(const ContactInfo&,const uint8_t*,uint8_t) { }
+#endif
       virtual uint8_t onUnhandledRequest(const ContactInfo &contact, uint32_t sender_timestamp, const uint8_t *data,
                                          uint8_t len, uint8_t *reply) { return 0; /* unknown request type */ }
       virtual bool onUnhandledResponse(const ContactInfo &from, uint32_t tag, const uint8_t* data, uint8_t len) { return false; /* not handled */ }
@@ -200,6 +207,43 @@ public:
     _store->savePrefs(_prefs);
     _prefs.clearDirty();
   }
+
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+  void onTextQueued(mesh::Packet* pkt, const ContactInfo* contact,
+                    const mesh::GroupChannel* channel, uint32_t timestamp,
+                    const char* text, uint32_t ack, uint32_t timeout) override {
+    if (_listener) _listener->onTextQueued(pkt, contact, channel, timestamp, text, ack, timeout);
+  }
+  void logTx(mesh::Packet* pkt, int len) override {
+    if (_listener) _listener->onTextTransmit(pkt, true);
+  }
+  void logTxFail(mesh::Packet* pkt, int len) override {
+    if (_listener) _listener->onTextTransmit(pkt, false);
+  }
+  void persistUIContacts() { saveContacts(); }
+  bool persistUIChannels() {
+    saveChannels(); File file=l2FS.open("/channels2","r");
+    if(!file || file.size()!=MAX_GROUP_CHANNELS*68) return false;
+    ChannelDetails ch;
+    for(int i=0;i<MAX_GROUP_CHANNELS;++i) { uint8_t record[68]; if(file.read(record,68)!=68 || !getChannel(i,ch) || memcmp(record+4,ch.name,32) || memcmp(record+36,ch.channel.secret,32)) return false; }
+    return true;
+  }
+  bool requestUITelemetry(const ContactInfo& contact);
+  bool factoryResetUI();
+  uint32_t uiTelemetryTag=0,uiTelemetryAt=0;
+  bool uiTelemetryRequested=false;
+  uint8_t uiTelemetryKey[32]={};
+  int sendUIMessage(ContactInfo& recipient,uint32_t timestamp,const char* text,uint32_t& ack,uint32_t& timeout) {
+    int result=sendMessage(recipient,timestamp,0,text,ack,timeout);
+    if(result!=MSG_SEND_FAILED) {
+      expected_ack_table[next_ack_idx].msg_sent=_ms->getMillis();
+      expected_ack_table[next_ack_idx].ack=ack;
+      expected_ack_table[next_ack_idx].contact=&recipient;
+      next_ack_idx=(next_ack_idx+1)%(sizeof(expected_ack_table)/sizeof(expected_ack_table[0]));
+    }
+    return result;
+  }
+#endif
 
 #if ENV_INCLUDE_GPS == 1
   void applyGpsPrefs() {

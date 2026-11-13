@@ -1,4 +1,7 @@
 #include "MyMesh.h"
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+#include <L2Audio.h>
+#endif
 
 #include <Arduino.h> // needed for PlatformIO
 #ifdef ENABLE_WIFI_INTERFACE
@@ -415,11 +418,13 @@ void MyMesh::onContactPathUpdated(const ContactInfo &contact) {
 }
 
 ContactInfo*  MyMesh::processAck(const uint8_t *data) {
+#ifndef SEEED_WIO_TRACKER_L2_PRO
   if (_listener) {
     uint32_t ack_crc;
     memcpy(&ack_crc, data, 4);
     _listener->onACKRecv(ack_crc);
   }
+#endif
   // see if matches any in a table
   for (int i = 0; i < EXPECTED_ACK_TABLE_SIZE; i++) {
     if (memcmp(data, &expected_ack_table[i].ack, 4) == 0) { // got an ACK from recipient
@@ -430,6 +435,9 @@ ContactInfo*  MyMesh::processAck(const uint8_t *data) {
       _serial->writeFrame(out_frame, 9);
 
       // NOTE: the same ACK can be received multiple times!
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+      if (_listener && expected_ack_table[i].ack) _listener->onACKRecv(expected_ack_table[i].ack);
+#endif
       expected_ack_table[i].ack = 0; // clear expected hash, now that we have received ACK
       return expected_ack_table[i].contact;
     }
@@ -687,10 +695,26 @@ uint8_t MyMesh::onContactRequest(const ContactInfo &contact, uint32_t sender_tim
   return 0; // unknown
 }
 
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+bool MyMesh::factoryResetUI() { radio_driver.allowTransmit(false); return _store->formatFileSystem(); }
+bool MyMesh::requestUITelemetry(const ContactInfo& contact) {
+  if(!radio_driver.isTxAllowed() || (uiTelemetryRequested && uint32_t(millis()-uiTelemetryAt)<15000)) return false;
+  uint8_t request[4]={REQ_TYPE_GET_TELEMETRY_DATA,0xff ^ TELEM_PERM_BASE,0,0}; uint32_t tag=0,timeout=0;
+  if(sendRequest(contact,request,sizeof(request),tag,timeout)==MSG_SEND_FAILED) return false;
+  uiTelemetryRequested=true; uiTelemetryAt=millis(); uiTelemetryTag=tag; memcpy(uiTelemetryKey,contact.id.pub_key,32); return true;
+}
+#endif
 void MyMesh::onContactResponse(const ContactInfo &contact, const uint8_t *data, uint8_t len) {
+  if(len<4) return;
   uint32_t tag;
   memcpy(&tag, data, 4);
 
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+  if(len>4 && uiTelemetryTag && tag==uiTelemetryTag && !memcmp(uiTelemetryKey,contact.id.pub_key,32)) {
+    uiTelemetryTag=0; if(_listener) _listener->onPeerTelemetry(contact,data+4,len-4); return;
+  }
+  if(len>4 && pending_telemetry && tag==pending_telemetry && _listener) _listener->onPeerTelemetry(contact,data+4,len-4);
+#endif
   if (pending_login && memcmp(&pending_login, contact.id.pub_key, 4) == 0) { // check for login response
     // yes, is response to pending sendLogin()
     pending_login = 0;
@@ -1053,6 +1077,49 @@ void MyMesh::startInterface(BaseSerialInterface &serial) {
 }
 
 void MyMesh::handleCmdFrame(size_t len) {
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+  // Reject before queueing, as well as blocking the physical transmitter.
+  // Clients must not get a successful send response during onboarding.
+  if (len == 0) return;
+  if (len==2 && cmd_frame[0]==CMD_GET_STATS && cmd_frame[1]==0x80) {
+    out_frame[0]=RESP_CODE_STATS; out_frame[1]=0x80;
+    size_t size=display.diagnostics(reinterpret_cast<char*>(&out_frame[2]),sizeof(out_frame)-2);
+    _serial->writeFrame(out_frame,size+2); return;
+  }
+  if(len==2 && cmd_frame[0]==CMD_GET_STATS && cmd_frame[1]==0x84) {
+    out_frame[0]=RESP_CODE_STATS; out_frame[1]=0x84;
+    size_t size=sensors.location().diagnostics(reinterpret_cast<char*>(&out_frame[2]),sizeof(out_frame)-2); _serial->writeFrame(out_frame,size+2); return;
+  }
+  if(len==8 && cmd_frame[0]==CMD_GET_STATS && cmd_frame[1]==0x83) {
+    uint32_t offset,total=0; memcpy(&offset,&cmd_frame[3],4);
+    out_frame[0]=RESP_CODE_STATS; out_frame[1]=0x83; out_frame[2]=cmd_frame[2]; memcpy(&out_frame[3],&offset,4);
+    size_t size=audio.readRecording(cmd_frame[2],offset,&out_frame[11],std::min(size_t(cmd_frame[7]),sizeof(out_frame)-11),total);
+    memcpy(&out_frame[7],&total,4); _serial->writeFrame(out_frame,size+11); return;
+  }
+  if(len==2 && cmd_frame[0]==CMD_GET_STATS && cmd_frame[1]==0x82) {
+    out_frame[0]=RESP_CODE_STATS; out_frame[1]=0x82;
+    size_t size=audio.diagnostics(reinterpret_cast<char*>(&out_frame[2]),sizeof(out_frame)-2);
+    _serial->writeFrame(out_frame,size+2); return;
+  }
+  if (len==7 && cmd_frame[0]==CMD_GET_STATS && cmd_frame[1]==0x81) {
+    uint32_t offset; memcpy(&offset,&cmd_frame[2],4);
+    out_frame[0]=RESP_CODE_STATS; out_frame[1]=0x81; memcpy(&out_frame[2],&offset,4);
+    size_t count=std::min(size_t(cmd_frame[6]),sizeof(out_frame)-6);
+    size_t size=display.readFrameBytes(offset,&out_frame[6],count);
+    _serial->writeFrame(out_frame,size+6); return;
+  }
+  if (!radio_driver.isTxAllowed()) {
+    switch (cmd_frame[0]) {
+      case CMD_SEND_TXT_MSG: case CMD_SEND_CHANNEL_TXT_MSG: case CMD_SEND_SELF_ADVERT:
+      case CMD_SHARE_CONTACT: case CMD_SEND_RAW_DATA: case CMD_SEND_LOGIN:
+      case CMD_SEND_STATUS_REQ: case CMD_SEND_TRACE_PATH: case CMD_SEND_TELEMETRY_REQ:
+      case CMD_SEND_BINARY_REQ: case CMD_SEND_PATH_DISCOVERY_REQ: case CMD_SEND_CONTROL_DATA:
+      case CMD_SEND_ANON_REQ: case CMD_SEND_CHANNEL_DATA: case CMD_SEND_RAW_PACKET:
+      case CMD_RUN_CLI_COMMAND:
+        writeDisabledFrame(); return;
+    }
+  }
+#endif
   if (cmd_frame[0] == CMD_DEVICE_QUERY && len >= 2) { // sent when app establishes connection
     app_target_ver = cmd_frame[1];                    // which version of protocol does app understand
 
@@ -1176,6 +1243,7 @@ void MyMesh::handleCmdFrame(size_t len) {
                         : ERR_CODE_UNSUPPORTED_CMD); // unknown recipient, or unsupported TXT_TYPE_*
     }
   } else if (cmd_frame[0] == CMD_SEND_CHANNEL_TXT_MSG) { // send GroupChannel text msg
+    if (len < 8) { writeErrFrame(ERR_CODE_ILLEGAL_ARG); return; }
     int i = 1;
     uint8_t txt_type = cmd_frame[i++]; // should be TXT_TYPE_PLAIN
     uint8_t channel_idx = cmd_frame[i++];
@@ -1962,13 +2030,16 @@ void MyMesh::handleCmdFrame(size_t len) {
     } else {
       writeErrFrame(ERR_CODE_ILLEGAL_ARG); // invalid stats sub-type
     }
-  } else if (cmd_frame[0] == CMD_FACTORY_RESET && memcmp(&cmd_frame[1], "reset", 5) == 0) {
+  } else if (cmd_frame[0] == CMD_FACTORY_RESET && len >= 6 && memcmp(&cmd_frame[1], "reset", 5) == 0) {
     if (_serial) {
       MESH_DEBUG_PRINTLN("Factory reset: disabling serial interface to prevent reconnects (BLE/WiFi)");
       _serial->disable(); // Phone app disconnects before we can send OK frame so it's safe here
     }
     bool success = _store->formatFileSystem();
     if (success) {
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+      l2ResetUserSettings();
+#endif
       writeOKFrame();
       delay(1000);
       board.reboot();  // doesn't return

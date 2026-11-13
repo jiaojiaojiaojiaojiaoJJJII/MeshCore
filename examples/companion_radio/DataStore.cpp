@@ -65,6 +65,9 @@ void DataStore::begin() {
 
 #if defined(ESP32)
   #include <SPIFFS.h>
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+  #include <L2Storage.h>
+#endif
   #include <nvs_flash.h>
 #elif defined(RP2040_PLATFORM)
   #include <LittleFS.h>
@@ -102,7 +105,11 @@ lfs_ssize_t _getLfsUsedBlockCount(FILESYSTEM* fs) {
 
 uint32_t DataStore::getStorageUsedKb() const {
 #if defined(ESP32)
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+  return l2FS.usedBytes() / 1024;
+#else
   return SPIFFS.usedBytes() / 1024;
+#endif
 #elif defined(RP2040_PLATFORM)
   FSInfo info;
   info.usedBytes = 0;
@@ -120,7 +127,11 @@ uint32_t DataStore::getStorageUsedKb() const {
 
 uint32_t DataStore::getStorageTotalKb() const {
 #if defined(ESP32)
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+  return l2FS.totalBytes() / 1024;
+#else
   return SPIFFS.totalBytes() / 1024;
+#endif
 #elif defined(RP2040_PLATFORM)
   FSInfo info;
   info.totalBytes = 0;
@@ -173,7 +184,11 @@ bool DataStore::formatFileSystem() {
 #elif defined(RP2040_PLATFORM)
   return LittleFS.format();
 #elif defined(ESP32)
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+  bool fs_success = l2FS.format();
+#else
   bool fs_success = ((fs::SPIFFSFS *)_fs)->format();
+#endif
   esp_err_t nvs_err = nvs_flash_erase(); // no need to reinit, will be done by reboot
   return fs_success && (nvs_err == ESP_OK);
 #else
@@ -321,6 +336,9 @@ void DataStore::saveContacts(DataStoreHost* host, bool (*filter)(const ContactIn
 }
 
 void DataStore::loadChannels(DataStoreHost* host) {
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+    if(!_getContactsChannelsFS()->exists("/channels2") && _getContactsChannelsFS()->exists("/channels2.bak")) _getContactsChannelsFS()->rename("/channels2.bak","/channels2");
+#endif
     File file = openRead(_getContactsChannelsFS(), "/channels2");
     if (file) {
       bool full = false;
@@ -346,6 +364,31 @@ void DataStore::loadChannels(DataStoreHost* host) {
 }
 
 void DataStore::saveChannels(DataStoreHost* host) {
+#ifdef SEEED_WIO_TRACKER_L2_PRO
+  {
+  auto* fs=_getContactsChannelsFS();
+  File temp=openWrite(fs,"/channels2.tmp"); if(!temp) return;
+  ChannelDetails ch; uint8_t unused[4]={}; unsigned count=0; bool ok=true;
+  while(host->getChannelForSave(count,ch)) {
+    if(temp.write(unused,4)!=4 || temp.write((uint8_t*)ch.name,32)!=32 || temp.write(ch.channel.secret,32)!=32) { ok=false; break; }
+    ++count;
+  }
+  temp.flush(); temp.close();
+  File check=openRead(fs,"/channels2.tmp"); ok=ok && check && check.size()==count*68;
+  for(unsigned i=0;ok && i<count;++i) {
+    uint8_t record[68]; ok=check.read(record,68)==68 && host->getChannelForSave(i,ch) && !memcmp(record+4,ch.name,32) && !memcmp(record+36,ch.channel.secret,32);
+  }
+  check.close();
+  if(!ok) { fs->remove("/channels2.tmp"); return; }
+  if(fs->exists("/channels2")) {
+    if(fs->exists("/channels2.bak") && !fs->remove("/channels2.bak")) return;
+    if(!fs->rename("/channels2","/channels2.bak")) return;
+  }
+  if(!fs->rename("/channels2.tmp","/channels2")) { fs->rename("/channels2.bak","/channels2"); return; }
+  fs->remove("/channels2.bak");
+  return;
+  }
+#endif
   File file = openWrite(_getContactsChannelsFS(), "/channels2");
   if (file) {
     uint8_t channel_idx = 0;

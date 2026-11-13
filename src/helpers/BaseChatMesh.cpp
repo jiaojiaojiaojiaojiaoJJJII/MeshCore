@@ -486,6 +486,7 @@ int  BaseChatMesh::sendMessage(const ContactInfo& recipient, uint32_t timestamp,
     txt_send_timeout = futureMillis(est_timeout = calcDirectTimeoutMillisFor(t, recipient.out_path_len));
     rc = MSG_SEND_SENT_DIRECT;
   }
+  onTextQueued(pkt, &recipient, nullptr, timestamp, text, expected_ack, est_timeout);
   return rc;
 }
 
@@ -531,6 +532,9 @@ bool BaseChatMesh::sendGroupMessage(uint32_t timestamp, mesh::GroupChannel& chan
   auto pkt = createGroupDatagram(PAYLOAD_TYPE_GRP_TXT, channel, temp, 5 + prefix_len + text_len);
   if (pkt) {
     sendFloodScoped(channel, pkt);
+    // Use the actual wire text length after the sender prefix has been deducted.
+    ep[text_len] = 0;
+    onTextQueued(pkt, nullptr, &channel, timestamp, ep, 0, 30000);
     return true;
   }
   return false;
